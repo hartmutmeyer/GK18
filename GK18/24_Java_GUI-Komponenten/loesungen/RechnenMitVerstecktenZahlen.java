@@ -1,96 +1,87 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class RechnenMitVerstecktenZahlen extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField tfErsterSummand;
-	private JTextField tfZweiterSummand;
-	private JTextField tfErgebnis;
-	private JLabel lblVersteckteSumme;
+	private JTextField tfEins;
+	private JTextField tfZwei;
+	private JButton btnAddieren;
+	private JLabel lblErgebnis;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RechnenMitVerstecktenZahlen frame = new RechnenMitVerstecktenZahlen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		RechnenMitVerstecktenZahlen frame = new RechnenMitVerstecktenZahlen();
+		frame.setVisible(true);
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public RechnenMitVerstecktenZahlen() {
+		createGUI();
+	}
+
+	private void createGUI() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 412, 139);
+		setBounds(100, 100, 389, 139);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		tfErsterSummand = new JTextField();
-		tfErsterSummand.setBounds(10, 11, 130, 20);
-		contentPane.add(tfErsterSummand);
-		tfErsterSummand.setColumns(10);
-		
-		tfZweiterSummand = new JTextField();
-		tfZweiterSummand.setBounds(150, 11, 130, 20);
-		contentPane.add(tfZweiterSummand);
-		tfZweiterSummand.setColumns(10);
-		
-		JButton btnAddieren = new JButton("Addieren");
+
+		tfEins = new JTextField();
+		tfEins.setBounds(12, 12, 114, 19);
+		contentPane.add(tfEins);
+		tfEins.setColumns(10);
+
+		tfZwei = new JTextField();
+		tfZwei.setBounds(138, 12, 114, 19);
+		contentPane.add(tfZwei);
+		tfZwei.setColumns(10);
+
+		btnAddieren = new JButton("Addieren");
 		btnAddieren.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				versteckteSummeBilden();
+			public void actionPerformed(ActionEvent e) {
+				addieren();
 			}
 		});
-		btnAddieren.setBounds(290, 10, 89, 23);
+		btnAddieren.setBounds(264, 9, 98, 25);
 		contentPane.add(btnAddieren);
-		
-		tfErgebnis = new JTextField();
-		tfErgebnis.setEditable(false);
-		tfErgebnis.setBounds(150, 64, 86, 20);
-		contentPane.add(tfErgebnis);
-		tfErgebnis.setColumns(10);
-		
-		lblVersteckteSumme = new JLabel("Versteckte Summe:");
-		lblVersteckteSumme.setBounds(10, 67, 130, 14);
-		contentPane.add(lblVersteckteSumme);
+
+		lblErgebnis = new JLabel("");
+		lblErgebnis.setBounds(12, 50, 240, 15);
+		contentPane.add(lblErgebnis);
 	}
 
-	private void versteckteSummeBilden() {
-		String versteckteZahl1 = tfErsterSummand.getText();
-		String versteckteZahl2 = tfZweiterSummand.getText();
-		
-		int summand1 = zahlExtrahieren(versteckteZahl1);
-		int summand2 = zahlExtrahieren(versteckteZahl2);
-		
-		tfErgebnis.setText("" + (summand1 + summand2));
+	private void addieren() {
+		int zahl1 = zahlenExtrahieren(tfEins);
+		int zahl2 = zahlenExtrahieren(tfZwei);
+		lblErgebnis.setText(zahl1 + " + " + zahl2 + " = " + (zahl1 + zahl2));
 	}
-	
-	private int zahlExtrahieren(String input) {
-		String zahl = "0";  // Strings, die keine Ziffern enthalten sollen den Wert 0 haben
-		for (int i = 0; i < input.length(); i++) {
-			if (Character.isDigit(input.charAt(i))) {
-				zahl += input.charAt(i);
+
+	private int zahlenExtrahieren(JTextField tf) {
+		String alles = tf.getText();
+		String nurZiffern = "";
+		for (int i = 0; i < alles.length(); i++) {
+			if (Character.isDigit(alles.charAt(i))) {
+				nurZiffern += alles.charAt(i);
 			}
 		}
-		return Integer.parseInt(zahl);
+		if(nurZiffern.isEmpty()) {
+			nurZiffern = "0";
+		}
+		int ergebnis = Integer.parseInt(nurZiffern);
+		return ergebnis;
 	}
 }
