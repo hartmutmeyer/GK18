@@ -4,7 +4,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -16,22 +15,15 @@ public class RechnenMitVerstecktenZahlen extends JFrame {
 	private JButton btnAddieren;
 	private JLabel lblErgebnis;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		RechnenMitVerstecktenZahlen frame = new RechnenMitVerstecktenZahlen();
-		frame.setVisible(true);
+	public RechnenMitVerstecktenZahlen() {
+		createGUI();
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public RechnenMitVerstecktenZahlen() {
-		createGUI();
-	}
-
 	private void createGUI() {
+		setTitle("Rechnen mit versteckten Zahlen");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 389, 139);
@@ -62,6 +54,7 @@ public class RechnenMitVerstecktenZahlen extends JFrame {
 		lblErgebnis = new JLabel("");
 		lblErgebnis.setBounds(12, 50, 240, 15);
 		contentPane.add(lblErgebnis);
+		setVisible(true);
 	}
 
 	private void addieren() {
@@ -81,7 +74,14 @@ public class RechnenMitVerstecktenZahlen extends JFrame {
 		if(nurZiffern.isEmpty()) {
 			nurZiffern = "0";
 		}
-		int ergebnis = Integer.parseInt(nurZiffern);
-		return ergebnis;
+		return Integer.parseInt(nurZiffern);
 	}
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		new RechnenMitVerstecktenZahlen();
+	}
+
 }
